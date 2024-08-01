@@ -1,21 +1,25 @@
 import threading
+import time
 
 def make_pants(color, number):
-    print(f"Making {color} pants!")
+    for i in range(number):
+        print(f"{i}: Making {color} pants!")
+        time.sleep(1)
 
-def make_dress(color):
-    print(f"Making {color} dress!")
+
+def make_dress(color, number):
+    for i in range(number):
+        print(f"{i}: Making {color} dress!")
+        time.sleep(1)
+    
 
 if __name__ =="__main__":
-    t1 = threading.Thread(target=make_pants, args=("green",))
-    t2 = threading.Thread(target=make_dress, args=("blue",))
+    start_time = time.time()
+    print("Boss: I need to make some clothes")
+    make_pants("green", 10)
+    make_dress("blue", 10)
 
-    t1.start()
-    t2.start()
-
-    print("middle function!")
-
-    # t1.join()
-    # t2.join()
-
-    print("end function!")
+    print("Clothes done! I'm leaving!")
+    end_time = time.time()
+    elapsed_time = end_time - start_time
+    print(f"Elapsed time: {elapsed_time:.2f} seconds")
