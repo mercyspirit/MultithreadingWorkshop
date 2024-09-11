@@ -24,7 +24,7 @@ def producer():
             clothing = {random_number["clothing"]}
             number = {random_number["number"]}
             print(f"Ordered: {number} {clothing}")
-            condition.notify_all()  # Notify all consumers that a new item is available
+            condition.notify()  # Notify all consumers that a new item is available
 
 # Consumer function that waits for random numbers and processes them
 def consumer(consumer_id):
