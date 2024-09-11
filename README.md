@@ -1,6 +1,9 @@
 # Multithreading Workshop
 
-## Requirements
+## Python Version
+Python 3.7 (or up)
+
+## Docker Requirements
 Please install docker on your system.
 
 Windows (Either WSL or Hyper-V work) - https://docs.docker.com/desktop/install/windows-install/
