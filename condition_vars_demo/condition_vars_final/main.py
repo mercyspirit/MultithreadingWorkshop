@@ -24,15 +24,17 @@ def producer():
             clothing = {random_number["clothing"]}
             number = {random_number["number"]}
             print(f"Ordered: {number} {clothing}")
+            condition.notify_all()  # Notify all consumers that a new item is available
 
 # Consumer function that waits for random numbers and processes them
 def consumer(consumer_id):
     while not stop_event.is_set():
-        while not request_queue and not stop_event.is_set():  # Wait until something is available in the queue
-            print(f"Consumer {consumer_id} is waiting for a number...")
-            condition.wait()  # Wait until the producer notifies
-        if request_queue:
-            request = request_queue.pop(0)
+        with condition:
+            while not request_queue and not stop_event.is_set():  # Wait until something is available in the queue
+                print(f"Consumer {consumer_id} is waiting for a number...")
+                condition.wait()  # Wait until the producer notifies
+            if request_queue:
+                request = request_queue.pop(0)
         clothing = request["clothing"]
         for num in range(request["number"]):
             time.sleep(1)
@@ -59,6 +61,10 @@ if __name__ == '__main__':
 
     # Set the stop_event to stop the threads
     stop_event.set()
+
+    # Notify all consumers in case they are waiting
+    with condition:
+        condition.notify_all()
 
     # Wait for all threads to finish
     producer_thread.join()
