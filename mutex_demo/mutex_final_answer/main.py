@@ -2,7 +2,7 @@ import time
 import threading
 import concurrent.futures
 import re
-from lottery-data import getData
+from lottery_data import getData
 
 survey_dictionary_count = {}
 counter = 0
